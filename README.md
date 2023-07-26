@@ -49,7 +49,7 @@ Project structure:
 
 ## Project Features
 
-There are several endpoints used in the application: `\seats`, `\purchase`, `\return`, `\stats`. All of them return the response in JSON format.
+There are several endpoints used in the application: `/seats`, `/purchase`, `/return`, `/stats`. All of them return the response in JSON format.
 
 
 
