@@ -49,7 +49,9 @@ Project structure:
 
 ## Project Features
 
-There are several endpoints used in the application, all of them return the response in JSON format.
+There are several endpoints used in the application: `\seats`, `\purchase`, `\return`, `\stats`. All of them return the response in JSON format.
+
+
 
 
 
@@ -59,108 +61,127 @@ Returns the information about the movie theater: the total amount of rows and co
 
 **Example:**
 
-```json
-// GET /seats
+- `GET /seats`
 
-// Response:
-{
-   "total_rows":5,
-   "total_columns":6,
-   "available_seats":[
-      {
-         "row":1,
-         "column":1
-      },
-      {
-         "row":3,
-         "column":2
-      },
-      {
-         "row":5,
-         "column":6
-      }
-   ]
-}
-```
+  Response:
+
+  ```json
+  {
+     "total_rows":5,
+     "total_columns":6,
+     "available_seats":[
+        {
+           "row":1,
+           "column":1
+        },
+        {
+           "row":3,
+           "column":2
+        },
+        {
+           "row":5,
+           "column":6
+        }
+     ]
+  }
+  ```
+
+
 
 
 
 ### `/purchase`
 
-Marks a booked ticket as purchased. It receives row and column in JSON format and either continues the booking process or throws `TheSeatIsTakenException`. If there is an exception, the `400 (Bad Request)` status code is returned.
+Marks a booked ticket as purchased. It receives row and column in JSON format and either continues the booking process or throws `TheSeatIsTakenException`. If the exception is thrown, the `400 (Bad Request)` status code is returned.
 
-When a customer buys a ticket, they the response body contains a randomly generated `UUID` token. The token and the data about the customer's ticket are stored in `PurchasedTicketsDatabase`.
+When a customer buys a ticket, the response body contains a randomly generated `UUID` token. The token and the data about the customer's ticket are stored in `PurchasedTicketsDatabase`.
 
 **Examples:**
 
-```json
-// POST /purchase
-{
-    "row": 1,
-    "column": 1
-}
+- `POST /purchase`
 
-// Response:
-{
-    "token": "00ae15f2-1ab6-4a02-a01f-07810b42c0ee",
-    "ticket": {
-        "row": 1,
-        "column": 1,
-        "price": 10
-    }
-}
-```
+  ```json
+  {
+      "row": 1,
+      "column": 1
+  }
+  ```
 
-```json
-// POST /purchase
-{
-    "row": 1,
-    "column": 1
-}
+  Response:
 
-// Response:
-{
-    "error": "The ticket has been already purchased!"
-}
-```
+  ```json
+  {
+      "token": "00ae15f2-1ab6-4a02-a01f-07810b42c0ee",
+      "ticket": {
+          "row": 1,
+          "column": 1,
+          "price": 10
+      }
+  }
+  ```
+
+- `POST /purchase`
+
+  ```json
+  {
+      "row": 1,
+      "column": 1
+  }
+  ```
+
+  Response:
+
+  ```json
+  {
+      "error": "The ticket has been already purchased!"
+  }
+  ```
+
+
 
 
 
 ### `/return`
 
-Allows customers to refund their tickets. It receives a token in JSON format and either continues the return process or throws `WrongTokenException`. If there is an exception, the `400 (Bad Request)` status code is returned.
+Allows customers to refund their tickets. It receives a token in JSON format and either continues the return process or throws `WrongTokenException`. If an exception is thrown, the `400 (Bad Request)` status code is returned.
 
 **Examples:**
 
-```json
-// POST /return
-{
-    "token": "00ae15f2-1ab6-4a02-a01f-07810b42c0ee"
-}
+- `POST /return`
 
-// Response:
-{
-    "returned_ticket": {
-        "row": 1,
-        "column": 1,
-        "price": 10
-    }
-}
-```
+  ```json
+  {
+      "token": "00ae15f2-1ab6-4a02-a01f-07810b42c0ee"
+  }
+  ```
 
-```json
-// POST /return
-{
-    "token": "00ae15f2-1ab6-4a02-a01f-07810b42c0ee"
-}
+  Response:
 
-// Response:
-{
-    "error": "Wrong token!"
-}
-```
+  ```json
+  {
+      "returned_ticket": {
+          "row": 1,
+          "column": 1,
+          "price": 10
+      }
+  }
+  ```
 
+- `POST /return`
 
+  ```json
+  {
+      "token": "00ae15f2-1ab6-4a02-a01f-07810b42c0ee"
+  }
+  ```
+
+  Response:
+
+  ```json
+  {
+      "error": "Wrong token!"
+  }
+  ```
 
 
 
@@ -176,28 +197,37 @@ Showing statistics is possible only for the theater managers. To confirm the rol
 
 **Examples:**
 
-```json
-// GET /stats
-{
-    "error": "The password is wrong!"
-}
-```
+- `GET /stats`
 
-```json
-// GET /stats&password=<user_pwd>
-{
-    "error": "The password is wrong!"
-}
-```
+  Response:
 
-```json
-// GET /stats&password=<manager_pwd>
+  ```json
+  {
+      "error": "The password is wrong!"
+  }
+  ```
 
-// Response:
-{
-    "current_income": 0,
-    "number_of_available_seats": 81,
-    "number_of_purchased_tickets": 0
-}
-```
+- `GET /stats?password=<user_pwd>`
+
+  Response:
+
+  ```json
+  {
+      "error": "The password is wrong!"
+  }
+  ```
+
+- `GET /stats?password=<manager_pwd>`
+
+  Response:
+
+  ```json
+  {
+      "current_income": 0,
+      "number_of_available_seats": 81,
+      "number_of_purchased_tickets": 0
+  }
+  ```
+
+  
 
