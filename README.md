@@ -60,9 +60,9 @@ Returns the information about the movie theater: the total amount of rows and co
 **Example:**
 
 ```json
-GET /seats
+// GET /seats
 
-Response:
+// Response:
 {
    "total_rows":5,
    "total_columns":6,
@@ -94,13 +94,13 @@ When a customer buys a ticket, they the response body contains a randomly genera
 **Examples:**
 
 ```json
-POST /purchase
+// POST /purchase
 {
     "row": 1,
     "column": 1
 }
 
-Response:
+// Response:
 {
     "token": "00ae15f2-1ab6-4a02-a01f-07810b42c0ee",
     "ticket": {
@@ -112,13 +112,13 @@ Response:
 ```
 
 ```json
-POST /purchase
+// POST /purchase
 {
     "row": 1,
     "column": 1
 }
 
-Response:
+// Response:
 {
     "error": "The ticket has been already purchased!"
 }
@@ -133,12 +133,12 @@ Allows customers to refund their tickets. It receives a token in JSON format and
 **Examples:**
 
 ```json
-POST /return
+// POST /return
 {
     "token": "00ae15f2-1ab6-4a02-a01f-07810b42c0ee"
 }
 
-Response:
+// Response:
 {
     "returned_ticket": {
         "row": 1,
@@ -149,12 +149,12 @@ Response:
 ```
 
 ```json
-POST /return
+// POST /return
 {
     "token": "00ae15f2-1ab6-4a02-a01f-07810b42c0ee"
 }
 
-Response:
+// Response:
 {
     "error": "Wrong token!"
 }
@@ -177,23 +177,23 @@ Showing statistics is possible only for the theater managers. To confirm the rol
 **Examples:**
 
 ```json
-GET /stats
+// GET /stats
 {
     "error": "The password is wrong!"
 }
 ```
 
 ```json
-GET /stats&password=<user_pwd>
+// GET /stats&password=<user_pwd>
 {
     "error": "The password is wrong!"
 }
 ```
 
 ```json
-GET /stats&password=<manager_pwd>
+// GET /stats&password=<manager_pwd>
 
-Response:
+// Response:
 {
     "current_income": 0,
     "number_of_available_seats": 81,
